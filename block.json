@@ -1,0 +1,17 @@
+{
+	"$schema": "https://json.schemastore.org/block.json",
+	"apiVersion": 2,
+	"name": "bookwhen/schedule",
+	"version": "0.1.0",
+	"title": "Bookwhen Schedule",
+	"category": "widgets",
+	"icon": "calendar",
+	"description": "Render your Bookwhen Schedule directly in a Wordpress page. Requires a Bookwhen API key",
+	"supports": {
+		"html": false
+	},
+	"textdomain": "bookwhen-schedule",
+	"editorScript": "file:./build/index.js",
+	"editorStyle": "file:./build/index.css",
+	"style": "file:./build/style-index.css"
+}
