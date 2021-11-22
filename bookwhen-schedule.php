@@ -10,17 +10,10 @@
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       bookwhen-schedule
  *
- * @package           create-block
+ * @package           bookwhen
  */
 
-/**
- * Registers the block using the metadata loaded from the `block.json` file.
- * Behind the scenes, it registers also all assets so they can be enqueued
- * through the block editor in the corresponding context.
- *
- * @see https://developer.wordpress.org/block-editor/how-to-guides/block-tutorial/writing-your-first-block-type/
- */
-function create_block_bookwhen_schedule_block_init() {
+function schedule_block_init() {
 	register_block_type( __DIR__, [
     'attributes' => [
       'key' => [
@@ -29,4 +22,22 @@ function create_block_bookwhen_schedule_block_init() {
     ]
   ]);
 }
-add_action( 'init', 'create_block_bookwhen_schedule_block_init' );
+add_action( 'init', 'schedule_block_init' );
+
+function bookwhen_schedule_block_assets() {
+
+	wp_enqueue_script(
+		'bookwhen-schedule-script',
+			plugins_url( '/assets/schedule.js', __FILE__ )
+	);
+
+	// Enqueue block editor styles
+	wp_enqueue_style(
+			'bookwhen-schedule-styles',
+			plugins_url( '/assets/schedule.css', __FILE__ ),
+			[],
+			filemtime( plugin_dir_path( __FILE__ ) . '/assets/schedule.css' )
+	);
+}
+
+add_action( 'enqueue_block_assets', 'bookwhen_schedule_block_assets' );

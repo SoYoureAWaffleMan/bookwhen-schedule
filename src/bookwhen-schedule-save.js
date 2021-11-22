@@ -22,13 +22,17 @@ import { useBlockProps } from '@wordpress/block-editor';
  *
  * @return {WPElement} Element to render.
  */
-export default function save() {
+export default function save (props) {
+
+	const key = props.attributes.key
+
+	if(!key){
+		return 'Please enter your Bookwhen API key'
+	}
+
 	return (
-		<p {...useBlockProps.save()}>
-			{__(
-				'Bookwhen Schedule – I done saved this',
-				'bookwhen-schedule'
-			)}
-		</p>
+		<div {...useBlockProps.save()} class="bookwhen-schedule shell" data-api-key={key}>
+			<div class="inner"></div>
+		</div>
 	);
 }

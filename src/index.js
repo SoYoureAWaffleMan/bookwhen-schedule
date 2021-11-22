@@ -12,7 +12,7 @@ import { registerBlockType } from '@wordpress/blocks';
  *
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
-import './style.scss';
+import './schedule-style.scss';
 
 /**
  * Internal dependencies
@@ -28,6 +28,9 @@ import save from './bookwhen-schedule-save';
 registerBlockType('bookwhen/schedule', {
 
 	title:'Bookwhen Schedule',
+
+	class:'ONE',
+	className:'TWO',
 
   description: 'Render your Bookwhen Schedule directly in a Wordpress page. Requires a Bookwhen API key',
 

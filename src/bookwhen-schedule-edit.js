@@ -17,14 +17,6 @@ import { PanelBody, TextControl } from '@wordpress/components'
 import { useBlockProps } from '@wordpress/block-editor';
 
 /**
- * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
- * Those files can contain any CSS code that gets applied to the editor.
- *
- * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
- */
-import './editor.scss';
-
-/**
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
  *
@@ -32,13 +24,33 @@ import './editor.scss';
  *
  * @return {WPElement} Element to render.
  */
-export default function Edit() {
+export default function Edit(props) {
+
+	const { attributes, setAttributes } = props;
+
 	return (
-		<p {...useBlockProps()}>
-			{__(
-				'Bookwhen Schedule – hello from the editor!',
-				'bookwhen-schedule'
-			)}
-		</p>
+		<>
+			<div {...useBlockProps()}>
+				<p>
+					{__(
+						'Bookwhen Schedule',
+						'bookwhen-schedule'
+					)}
+					|{!attributes.key ? ' Please enter your Bookwhen API key' : 'OK!' }
+				</p>
+			</div>
+			<InspectorControls>
+				<PanelBody
+					title="Events Options"
+					initialOpen={ true }
+				>
+					<TextControl
+						label={__("Bookwhen API Key", 'bookwhen')}
+						value={attributes.key}
+						onChange={ key => setAttributes({key})}
+					/>
+				</PanelBody>
+			</InspectorControls>
+		</>
 	);
 }
