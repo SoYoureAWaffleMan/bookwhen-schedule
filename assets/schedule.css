@@ -37,17 +37,16 @@
 @keyframes pulse {
   0%, 100% {
     transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
   }
 
   50% {
     transform: scale(2);
-    box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
   }
 }
 
 .wp-block-bookwhen-schedule.loading::after {
   content: 'loading events';
+  padding-top: 2rem;
 }
 
 .wp-block-bookwhen-schedule .inner ul {

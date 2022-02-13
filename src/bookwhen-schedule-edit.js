@@ -15,29 +15,28 @@ import { PanelBody, TextControl } from '@wordpress/components'
  * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
  */
 import { useBlockProps } from '@wordpress/block-editor';
+import demoDom from './demoDom';
 
 /**
- * The edit function describes the structure of your block in the context of the
- * editor. This represents what the editor will render when the block is used.
+ * Represents what the editor will render when the block is used.
  *
  * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
  *
  * @return {WPElement} Element to render.
  */
 export default function Edit(props) {
-
 	const { attributes, setAttributes } = props;
+
+	// TODO use event here to hook into schedule.js - or better option via React?
+	if(attributes.key){
+		const bookwhenEdit = new Event('bookwhen-edit');
+	}
 
 	return (
 		<>
 			<div {...useBlockProps()}>
-				<p>
-					{__(
-						'Bookwhen Schedule',
-						'bookwhen-schedule'
-					)}
-					|{!attributes.key ? ' Please enter your Bookwhen API key' : 'OK!' }
-				</p>
+				{__('Bookwhen Schedule', 'bookwhen-schedule')}
+				|{!attributes.key ? 'Please enter your Bookwhen API key' : demoDom() }
 			</div>
 			<InspectorControls>
 				<PanelBody

@@ -1,3 +1,4 @@
+
 /**
  * This is the code that interacts with with the Bookwhen API, independent
  * .. of Wordpress editor, block, React etc. It seeks elements that match
@@ -5,13 +6,13 @@
  * .. approprate data
  */
 
-function onDocReady(fn) {
+function onDocReady(runThisFn) {
   // See if DOM is already available
   if (document.readyState === "complete" || document.readyState === "interactive") {
       // call on next available tick
-      setTimeout(fn, 1);
+      setTimeout(runThisFn, 1);
   } else {
-      document.addEventListener("DOMContentLoaded", fn);
+      document.addEventListener("DOMContentLoaded", runThisFn);
   }
 }
 
@@ -100,10 +101,13 @@ function groupItemsByMonth(responseObject) {
     item.timeLabel = startDate.toLocaleTimeString('en-GB', { hour12: true, hour: 'numeric', minute: 'numeric' })
 
     let location = getLocationForItem(item, included);
-    item.locationLabel = location
-      // ? location.attributes.address_text.replace(/(?:\r\n|\r|\n)/g, ', ')
-      ? location.attributes.address_text.split("\n")[0]
-      : ''
+
+    // Attempt to derive venue name, town from the location address property
+    if(location) {
+      const bits = location.attributes.address_text.split("\n")
+      item.venueName = bits[0]
+      item.townName = bits[2]
+    }
 
     if (monthsObj.hasOwnProperty(monthLabel)) {
       monthsObj[monthLabel].push(item)
@@ -119,7 +123,7 @@ function groupItemsByMonth(responseObject) {
  *
  * @param {*} item
  */
-function getLocationForItem(item, included){
+function getLocationForItem(item, included) {
 
   try{
     let locationId = item.relationships.location.data.id
@@ -149,9 +153,9 @@ function addMonthToInner(monthLabel, items, inner) {
   items.forEach(function(item) {
     let day = `<div class="day-time"><span class="day">${item.dayLabel}</span> <span class="time">${item.timeLabel}</span></div>`;
     let title = `<div class="title">${item.attributes.title}</div>`;
-    let location = `<div class="location">${item.locationLabel}</div>`;
+    let venue = `<div class="location">${item.venueName}, ${item.townName}</div>`;
     let action = `<a href="${getEventUrlForId(item.id)}" class="action">Book Now</a>`;
-    liStrings += `<li><div class="wrapper">${day}${title}${location}</div>${action}</li>`;
+    liStrings += `<li><div class="wrapper">${day}${title}${venue}</div>${action}</li>`;
   })
 
   let dom = `<h3>${monthLabel}</h3><ul>${liStrings}</ul>`;
@@ -168,4 +172,3 @@ function addMonthToInner(monthLabel, items, inner) {
 function getEventUrlForId(eventId) {
   return 'https://bookwhen.com/movema/e/'+eventId
 }
-
