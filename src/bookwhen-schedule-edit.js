@@ -13,7 +13,12 @@ import demoDom from './demoDom';
  * @return {WPElement} Element to render.
  */
 export default function Edit(props) {
-	const { attributes, setAttributes } = props;
+	const { attributes, setAttributes, clientId } = props;
+
+	// Store the blockID as an attribute to use as unique ID when styling multiple blocks
+	setAttributes({
+		blockId: clientId
+	});
 
 	// TODO use event here to hook into schedule.js - or better option via React?
 	if(attributes.key){

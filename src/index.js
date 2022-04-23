@@ -41,6 +41,9 @@ registerBlockType('bookwhen/schedule', {
   },
 
   attributes: {
+    blockId: {
+      type: 'string',
+    },
     key: {
       type: 'string',
     },

@@ -16,7 +16,10 @@
 function schedule_block_init() {
 	register_block_type( __DIR__, [
     'attributes' => [
-      'key' => [
+      'blockId' => [
+        'type' => 'string',
+			],
+			'key' => [
         'type' => 'string',
 			],
       'filterTags' => [

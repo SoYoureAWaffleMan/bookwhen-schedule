@@ -43,8 +43,13 @@ __webpack_require__.r(__webpack_exports__);
 function Edit(props) {
   const {
     attributes,
-    setAttributes
-  } = props; // TODO use event here to hook into schedule.js - or better option via React?
+    setAttributes,
+    clientId
+  } = props; // Store the blockID as an attribute to use as unique ID when styling multiple blocks
+
+  setAttributes({
+    blockId: clientId
+  }); // TODO use event here to hook into schedule.js - or better option via React?
 
   if (attributes.key) {
     const bookwhenEdit = new Event('bookwhen-edit');
@@ -142,6 +147,7 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 function save(props) {
+  const id = '_' + props.attributes.blockId.replaceAll('-', '');
   const key = props.attributes.key;
   const filterTags = props.attributes.filterTags;
   const buttonBg = props.attributes.buttonBg;
@@ -153,9 +159,10 @@ function save(props) {
 
 
   let style = [];
-  buttonBg && style.push(`.wp-block-bookwhen-schedule a.action { background-color: ${buttonBg}!important }`);
-  buttonColor && style.push(`.wp-block-bookwhen-schedule a.action { color: ${buttonColor}!important }`);
+  buttonBg && style.push(`#${id}.wp-block-bookwhen-schedule a.action { background-color: ${buttonBg}!important }`);
+  buttonColor && style.push(`#${id}.wp-block-bookwhen-schedule a.action { color: ${buttonColor}!important }`);
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)("div", (0,_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({}, _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.useBlockProps.save(), {
+    id: id,
     class: "bookwhen-schedule shell",
     "data-api-key": key,
     "data-filter-tags": filterTags
@@ -471,6 +478,9 @@ __webpack_require__.r(__webpack_exports__);
     html: false
   },
   attributes: {
+    blockId: {
+      type: 'string'
+    },
     key: {
       type: 'string'
     },
