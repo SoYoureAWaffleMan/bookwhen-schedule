@@ -29,9 +29,6 @@ registerBlockType('bookwhen/schedule', {
 
 	title:'Bookwhen Schedule',
 
-	class:'ONE',
-	className:'TWO',
-
   description: 'Render your Bookwhen Schedule directly in a Wordpress page. Requires a Bookwhen API key',
 
   category: 'common',
@@ -45,6 +42,15 @@ registerBlockType('bookwhen/schedule', {
 
   attributes: {
     key: {
+      type: 'string',
+    },
+    filterTags: {
+      type: 'string',
+    },
+    buttonBg: {
+      type: 'string',
+    },
+    buttonColor: {
       type: 'string',
     },
   },

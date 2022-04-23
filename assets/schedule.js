@@ -30,16 +30,24 @@ onDocReady(populateSchedules)
  */
 function populate(shell) {
   let inner = shell.querySelector('.inner');
-  let url = 'https://api.bookwhen.com/v2/events?include=location,tickets';
   let username = shell.dataset.apiKey;
   let password = '';
+  let filterTags = shell.dataset.filterTags;
   let finished = false;
+  let empty = false;
   let minSecondsPassed = false;
   let minSeconds = 2;
+  let url = new URL('https://api.bookwhen.com/v2/events');
+  url.searchParams.set('include', 'location,tickets');
+
 
   if (!username) {
     console.warn('No Bookwhen API key found. Bailing...');
     return;
+  }
+
+  if(filterTags) {
+    url.searchParams.set('filter[tag]', filterTags);
   }
 
   shell.classList.add('loading')
@@ -66,8 +74,14 @@ function populate(shell) {
     },
     complete() {
       finished = true;
+      empty = !document.querySelector('.wp-block-bookwhen-schedule ul');
+
       if(minSecondsPassed) {
         shell.classList.remove('loading');
+      }
+
+      if(empty) {
+        shell.classList.add('empty');
       }
     }
   })

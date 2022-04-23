@@ -1,20 +1,8 @@
-/**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
- */
 import { __ } from '@wordpress/i18n';
-
-import { InspectorControls } from '@wordpress/block-editor'
-import { PanelBody, TextControl } from '@wordpress/components'
-
-/**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
- */
-import { useBlockProps } from '@wordpress/block-editor';
+import { InspectorControls, useBlockProps } from '@wordpress/block-editor'
+import { PanelBody, TextControl, ColorPalette } from '@wordpress/components'
+import React, { useState } from "react";
+import { useSelect } from '@wordpress/data';
 import demoDom from './demoDom';
 
 /**
@@ -32,15 +20,19 @@ export default function Edit(props) {
 		const bookwhenEdit = new Event('bookwhen-edit');
 	}
 
+	// Retrieve the themes color settings from the block editors' data
+	const colors = useSelect('core/block-editor').getSettings().colors;
+	const [_color, setColor] = useState(); // No default color set
+
 	return (
 		<>
 			<div {...useBlockProps()}>
 				{__('Bookwhen Schedule', 'bookwhen-schedule')}
-				|{!attributes.key ? 'Please enter your Bookwhen API key' : demoDom() }
+				|{!attributes.key ? 'Please enter your Bookwhen API key' : demoDom(attributes.buttonBg, attributes.buttonColor) }
 			</div>
 			<InspectorControls>
 				<PanelBody
-					title="Events Options"
+					title="Options"
 					initialOpen={ true }
 				>
 					<TextControl
@@ -48,6 +40,35 @@ export default function Edit(props) {
 						value={attributes.key}
 						onChange={ key => setAttributes({key})}
 					/>
+					<TextControl
+						label={__("Tags (e.g. 'Bristol, Samba')", 'bookwhen')}
+						value={attributes.filterTags}
+						onChange={ filterTags => setAttributes({filterTags})}
+					/>
+				</PanelBody>
+				<PanelBody title="Buttons" initialOpen={ true }>
+					<fieldset>
+						<legend className="blocks-base-control__label">
+								{ __( 'Background', 'bookwhen' ) }
+						</legend>
+
+						<ColorPalette
+							colors={colors}
+							value={attributes.buttonBg}
+							onChange={(buttonBg) => {setColor(buttonBg); setAttributes({buttonBg})}}
+						/>
+					</fieldset>
+					<fieldset>
+						<legend>
+								{ __( 'Text', 'bookwhen' ) }
+						</legend>
+
+						<ColorPalette
+							colors={colors}
+							value={attributes.buttonColor}
+							onChange={(buttonColor) => {setColor(buttonColor); setAttributes({buttonColor})}}
+						/>
+					</fieldset>
 				</PanelBody>
 			</InspectorControls>
 		</>

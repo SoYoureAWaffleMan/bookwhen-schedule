@@ -18,7 +18,16 @@ function schedule_block_init() {
     'attributes' => [
       'key' => [
         'type' => 'string',
-      ]
+			],
+      'filterTags' => [
+        'type' => 'string',
+			],
+      'buttonBg' => [
+        'type' => 'string',
+			],
+      'buttonColor' => [
+        'type' => 'string',
+			],
     ]
   ]);
 }

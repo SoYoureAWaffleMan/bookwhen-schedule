@@ -20,3 +20,7 @@ Users on your site can click through to the booking page itself to complete paym
 1. Activate the plugin through the 'Plugins' screen in WordPress
 1. Add the block to a page and set its API key
 
+## Development
+
+1. Run `npm run start` in the root directory to enable "Live Reload"
+1. Consider a symlink from e.g. `/var/www/movema/wp-content/plugins/bookwhen-schedule` -> `/myCode/bookwhen-schedule` to see edits take effect

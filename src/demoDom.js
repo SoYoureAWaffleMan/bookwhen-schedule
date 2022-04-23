@@ -1,5 +1,9 @@
+export default function demoDom(buttonBg, buttonColor) {
 
-export default function demoDom() {
+  let buttonStyle = {
+    backgroundColor: buttonBg,
+    color: buttonColor,
+  }
 
 	return (
 		<>
@@ -19,7 +23,7 @@ export default function demoDom() {
               <div class="location">
                 Location
               </div>
-            </div><a class="action">Book Now</a>
+            </div><a class="action" style={buttonStyle}>Book Now</a>
           </li>
 
           <li>
@@ -35,7 +39,7 @@ export default function demoDom() {
               <div class="location">
                 Location
               </div>
-            </div><a href="#" class="action">Book Now</a>
+            </div><a href="#" class="action" style={buttonStyle}>Book Now</a>
           </li>
 
           <li>
@@ -51,7 +55,7 @@ export default function demoDom() {
               <div class="location">
                 Location
               </div>
-            </div><a href="#" class="action">Book Now</a>
+            </div><a href="#" class="action" style={buttonStyle}>Book Now</a>
           </li>
         </ul>
       </div>
