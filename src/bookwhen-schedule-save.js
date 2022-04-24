@@ -23,7 +23,9 @@ import { useBlockProps } from '@wordpress/block-editor';
  * @return {WPElement} Element to render.
  */
 export default function save (props) {
-	const id = '_'+props.attributes.blockId.replaceAll('-', '')
+	const id = props.attributes.blockId
+		? '_'+props.attributes.blockId.replaceAll('-', '')
+		: 'noid'; // Compatibilty with old version
 	const key = props.attributes.key
 	const filterTags = props.attributes.filterTags
 	const buttonBg = props.attributes.buttonBg

@@ -4,8 +4,8 @@
  * Description:       Bookwhen plugin for Wordpress. Provides a block that renders your Bookwhen schedule directly in a Wordpress page
  * Requires at least: 5.8
  * Requires PHP:      7.0
- * Version:           0.1.0
- * Author:            The WordPress Contributors
+ * Version:           0.1.1
+ * Author:            Xander King
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       bookwhen-schedule
@@ -40,7 +40,8 @@ function bookwhen_schedule_block_assets() {
 
 	wp_enqueue_script(
 		'bookwhen-schedule-script',
-			plugins_url( '/assets/schedule.js', __FILE__ )
+			plugins_url( '/assets/schedule.js', __FILE__ ),
+			array('jquery'),
 	);
 
 	// Enqueue block editor styles
